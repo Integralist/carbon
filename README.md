@@ -64,3 +64,13 @@ Status Code: 200 OK
 ## Tests?
 
 Nope. This was just a quick hack
+
+## Bash?
+
+Yeah sure I could've used Bash.
+
+I could've used `curl` with `-D, --dump-headers`
+
+Or tried piping output manually ala `-v -o /dev/null`
+
+But whatever, I like writing Go
