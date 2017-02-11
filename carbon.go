@@ -24,12 +24,14 @@ func (v headers) Less(i, j int) bool {
 }
 
 func main() {
+	fmt.Printf("\n")
+
 	if len(os.Args) < 2 {
 		fmt.Println("Please provide a URL (e.g.  https://www.buzzfeed.com/?country=us)")
 		os.Exit(1)
 	}
 
-	help := flag.Bool("help", false, "show commands")
+	help := flag.Bool("help", false, "show available flags")
 	filter := flag.String("filter", "", "comma-separated list of headers to be displayed\n\te.g. X-Siterouter-Upstream,X-Cache")
 	flag.Parse()
 

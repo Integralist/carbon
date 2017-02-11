@@ -1,6 +1,6 @@
 # Carbon
 
-HTTP Response Header Filtering
+HTTP Response Header Sorting and Filtering
 
 > carbon filtering: method of filtering impurities
 
@@ -20,12 +20,13 @@ Help...
 
 ```bash
 carbon -help
-  
+
+Usage of carbon:
   -filter string
         comma-separated list of headers to be displayed
         e.g. X-Siterouter-Upstream,X-Cache
   -help
-        show commands
+        show available flags
 ```
 
 With filter...
