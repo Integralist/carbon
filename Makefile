@@ -1,3 +1,5 @@
+.DEFAULT_GOAL := install
+
 build:
 	docker build -t go-container-with-vim .
 
