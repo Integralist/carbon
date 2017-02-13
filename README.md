@@ -70,8 +70,32 @@ Nope. This was just a quick hack
 
 Yeah sure I could've used Bash.
 
-I could've used `curl` with `-D, --dump-headers`
+A simple oneliner would have looked like this:
 
-Or tried piping output manually ala `-v -o /dev/null`
+```bash
+curl -D ./headers.txt -o /dev/null -s https://www.buzzfeed.com/?country=us; cat ./headers.txt | sort; rm ./headers.txt
+```
 
-But whatever, I like writing Go
+> Uses `-D, --dump-headers` to access headers  
+> That's not possible via a pipe or when using `-v` verbose mode
+
+Or if you wanted to abstract it away into a nice reusable Bash function:
+
+```bash
+function headers {
+  if [ -z "$1" ]; then
+    printf "\n\tExample: headers https://www.buzzfeed.com/?country=us 'x-cache|x-timer'\n"
+    return
+  fi
+
+  local url=$1
+  local pattern=${2:-''}
+  local response=$(curl -H Fastly-Debug:1 -D - -o /dev/null -s "$url" | sort) # -D - will dump to stdout
+
+  echo "$response" | egrep -i "$pattern"
+}
+```
+
+Bash is super simple to write, and the above snippet should suffice for anyone not interested in Go.
+
+But ultimately, I wanted to write some Go and this seemed like a fun/small thing to play around with
