@@ -1,7 +1,16 @@
 .DEFAULT_GOAL := install
 
-build:
+copy_vim_files:
+	cp -r "$$HOME/.vim" ./.vim
+	cp "$$HOME/.vimrc" ./.vimrc
+
+remove_vim_files:
+	rm -rf ./.vim
+	rm -rf ./.vimrc
+
+build: copy_vim_files
 	docker build -t go-container-with-vim .
+	remove_vim_files
 
 run: build
 	docker run -it \
