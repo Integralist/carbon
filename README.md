@@ -99,3 +99,5 @@ function headers {
 Bash is super simple to write, and the above snippet should suffice for anyone not interested in Go.
 
 But ultimately, I wanted to write some Go and this seemed like a fun/small thing to play around with
+
+> Note: [here's an official repo for the Bash version](https://github.com/Integralist/Bash-Headers) if you're interested
