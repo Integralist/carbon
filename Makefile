@@ -5,8 +5,8 @@ copy_vim_files:
 	cp "$$HOME/.vimrc" ./.vimrc
 
 remove_vim_files:
-	rm -rf ./.vim
-	rm -rf ./.vimrc
+	-@rm -rf ./.vim &> /dev/null || true
+	-@rm -rf ./.vimrc &> /dev/null || true
 
 build: copy_vim_files
 	docker build -t go-container-with-vim .
