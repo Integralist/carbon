@@ -1,0 +1,5 @@
+FROM golang:1.7.5-alpine
+
+WORKDIR /go/src
+
+CMD ["sh", "-c", "ls -laH carbon.go && go build -o carbon . && ./carbon -h"]
