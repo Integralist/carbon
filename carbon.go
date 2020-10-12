@@ -24,6 +24,14 @@ func (v headers) Less(i, j int) bool {
 	return v[i].Key < v[j].Key
 }
 
+func print(key string, val []string, plain bool) {
+	if plain == true {
+		fmt.Printf("%s: %s\n", key, strings.Join(val, ", "))
+	} else {
+		fmt.Printf("%s:\n  %s\n\n", key, val)
+	}
+}
+
 func main() {
 	fmt.Printf("\n")
 
@@ -34,6 +42,7 @@ func main() {
 
 	help := flag.Bool("help", false, "show available flags")
 	filter := flag.String("filter", "", "comma-separated list of headers to be displayed\n\te.g. X-Siterouter-Upstream,X-Cache")
+	plain := flag.Bool("plain", false, "output is formatted for easy piping")
 	flag.Parse()
 
 	if *help == true {
@@ -42,9 +51,12 @@ func main() {
 	}
 
 	var url string
-	if *filter != "" {
+	switch len(os.Args) {
+	case 5:
+		url = os.Args[4]
+	case 4:
 		url = os.Args[3]
-	} else {
+	default:
 		url = os.Args[1]
 	}
 
@@ -68,13 +80,13 @@ func main() {
 			for _, v := range filters {
 				matched, _ := regexp.MatchString("(?i)"+v, header.Key)
 				if matched {
-					fmt.Printf("%s:\n  %s\n\n", header.Key, header.Val)
+					print(header.Key, header.Val, *plain)
 				}
 			}
 		}
 	} else {
 		for _, header := range hs {
-			fmt.Printf("%s:\n  %s\n\n", header.Key, header.Val)
+			print(header.Key, header.Val, *plain)
 		}
 	}
 

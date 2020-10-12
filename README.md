@@ -31,6 +31,8 @@ Usage of carbon:
         e.g. X-Siterouter-Upstream,X-Cache
   -help
         show available flags
+  -plain
+    	output is formatted for easy piping
 ```
 
 With filter...
@@ -72,6 +74,18 @@ Cache-Control:
 X-Timer:
   [S1486813451.981669,VS0,VE0]
 
+Status Code: 200 OK
+```
+
+Plain...
+
+```bash
+carbon -filter cache,vary -plain https://www.buzzfeed.com
+
+Cache-Control: no-cache, no-store, must-revalidate
+Vary: X-BF-User-Edition, Accept-Encoding
+X-Cache: HIT
+X-Cache-Hits: 1
 Status Code: 200 OK
 ```
 
