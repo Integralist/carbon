@@ -1,4 +1,4 @@
-FROM golang:1.7.5-alpine
+FROM golang:latest
 
 RUN apk --update add vim git
 

@@ -24,7 +24,7 @@ clean: remove_vim_files
 rebuild: clean run
 
 uninstall: clean
-	-@rm /usr/local/bin/app &> /dev/null || true
+	-@rm /usr/local/bin/carbon &> /dev/null || true
 
 gobuild:
 	go build -o ./carbon

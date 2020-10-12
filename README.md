@@ -4,19 +4,23 @@ HTTP Response Header Sorting and Filtering
 
 > carbon filtering: method of filtering impurities
 
+## Install
+
+```bash
+go get -u github.com/integralist/carbon
+```
+
 ## Build
 
-To build and install the `carbon` executable run:
+To build and install the `carbon` executable locally, then run:
 
 ```bash
 make install
 ```
 
-> this will install to `/usr/local/bin`
+> this will install to `/usr/local/bin` where as `go get` installs to the `~/go/bin`.
 
 ## Usage
-
-Help...
 
 ```bash
 carbon -help
@@ -32,12 +36,21 @@ Usage of carbon:
 With filter...
 
 ```bash
-carbon -filter X-Cache https://www.buzzfeed.com/
+carbon -filter cache,vary https://www.buzzfeed.com
 
-  X-Cache:
-    [HIT]
+Cache-Control:
+  [no-cache, no-store, must-revalidate]
 
-  Status Code: 200 OK
+Vary:
+  [X-BF-User-Edition, Accept-Encoding]
+
+X-Cache:
+  [MISS]
+
+X-Cache-Hits:
+  [0]
+
+Status Code: 200 OK
 ```
 
 No filter...
@@ -66,38 +79,6 @@ Status Code: 200 OK
 
 Nope. This was just a quick hack
 
-## Bash?
+## Bash Alternative?
 
-Yeah sure I could've used Bash.
-
-A simple oneliner would have looked like this:
-
-```bash
-curl -D ./headers.txt -o /dev/null -s https://www.buzzfeed.com/?country=us; cat ./headers.txt | sort; rm ./headers.txt
-```
-
-> Uses `-D, --dump-headers` to access headers  
-> That's not possible via a pipe or when using `-v` verbose mode
-
-Or if you wanted to abstract it away into a nice reusable Bash function:
-
-```bash
-function headers {
-  if [ -z "$1" ]; then
-    printf "\n\tExample: headers https://www.buzzfeed.com/?country=us 'x-cache|x-timer'\n"
-    return
-  fi
-
-  local url=$1
-  local pattern=${2:-''}
-  local response=$(curl -H Fastly-Debug:1 -D - -o /dev/null -s "$url" | sort) # -D - will dump to stdout
-
-  echo "$response" | egrep -i "$pattern"
-}
-```
-
-Bash is super simple to write, and the above snippet should suffice for anyone not interested in Go.
-
-But ultimately, I wanted to write some Go and this seemed like a fun/small thing to play around with
-
-> Note: [here's an official repo for the Bash version](https://github.com/Integralist/Bash-Headers) if you're interested
+Here's an official repo for the Bash version](https://github.com/Integralist/Bash-Headers) (if you're interested).

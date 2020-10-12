@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"regexp"
 	"sort"
 	"strings"
 )
@@ -65,7 +66,8 @@ func main() {
 		filters := strings.Split(*filter, ",")
 		for _, header := range hs {
 			for _, v := range filters {
-				if header.Key == v {
+				matched, _ := regexp.MatchString("(?i)"+v, header.Key)
+				if matched {
 					fmt.Printf("%s:\n  %s\n\n", header.Key, header.Val)
 				}
 			}
