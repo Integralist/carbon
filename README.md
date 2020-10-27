@@ -28,7 +28,7 @@ carbon -help
 Usage of carbon:
   -filter string
         comma-separated list of headers to be displayed
-        e.g. X-Siterouter-Upstream,X-Cache
+        e.g. cache,vary
   -help
         show available flags
   -plain

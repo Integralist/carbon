@@ -41,7 +41,7 @@ func main() {
 	}
 
 	help := flag.Bool("help", false, "show available flags")
-	filter := flag.String("filter", "", "comma-separated list of headers to be displayed\n\te.g. X-Siterouter-Upstream,X-Cache")
+	filter := flag.String("filter", "", "comma-separated list of headers to be displayed\n\te.g. cache,vary")
 	plain := flag.Bool("plain", false, "output is formatted for easy piping")
 	flag.Parse()
 
