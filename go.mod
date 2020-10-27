@@ -1,3 +1,3 @@
-module github.com/Integralist/carbon
+module github.com/integralist/carbon
 
 go 1.15
