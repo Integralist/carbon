@@ -35,44 +35,63 @@ Usage of carbon:
     	output is formatted for easy piping
 ```
 
-With filter...
-
-```bash
-carbon -filter cache,vary https://www.buzzfeed.com
-
-Cache-Control:
-  [no-cache, no-store, must-revalidate]
-
-Vary:
-  [X-BF-User-Edition, Accept-Encoding]
-
-X-Cache:
-  [MISS]
-
-X-Cache-Hits:
-  [0]
-
-Status Code: 200 OK
-```
-
 No filter...
 
 ```bash
-carbon https://www.buzzfeed.com/
+carbon https://www.fastly.com/
 
 Accept-Ranges:
   [bytes]
 
-Age:
-  [47]
+Cache-Control:
+  [max-age=0, private, must-revalidate]
+
+Content-Type:
+  [text/html]
+
+Date:
+  [Tue, 27 Oct 2020 09:55:39 GMT]
+
+Etag:
+  ["c248491ee6293167e071523b47b4625e"]
+
+Server:
+  [Artisanal bits]
+
+Strict-Transport-Security:
+  [max-age=31536000]
+
+Vary:
+  [Accept-Encoding]
+
+X-Cache:
+  [HIT]
+
+X-Content-Type-Options:
+  [nosniff]
+
+X-Frame-Options:
+  [DENY]
+
+X-Xss-Protection:
+  [1; mode=block]
+
+Status Code: 200 OK
+```
+
+With filter...
+
+```bash
+carbon -filter cache,vary https://www.fastly.com
 
 Cache-Control:
-  [no-cache, no-store, must-revalidate]
+  [max-age=0, private, must-revalidate]
 
-...lots of stuff...
+Vary:
+  [Accept-Encoding]
 
-X-Timer:
-  [S1486813451.981669,VS0,VE0]
+X-Cache:
+  [HIT]
 
 Status Code: 200 OK
 ```
@@ -80,12 +99,11 @@ Status Code: 200 OK
 Plain...
 
 ```bash
-carbon -filter cache,vary -plain https://www.buzzfeed.com
+carbon -filter cache,vary -plain https://www.fastly.com
 
-Cache-Control: no-cache, no-store, must-revalidate
-Vary: X-BF-User-Edition, Accept-Encoding
+Cache-Control: max-age=0, private, must-revalidate
+Vary: Accept-Encoding
 X-Cache: HIT
-X-Cache-Hits: 1
 Status Code: 200 OK
 ```
 

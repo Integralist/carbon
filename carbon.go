@@ -36,7 +36,7 @@ func main() {
 	fmt.Printf("\n")
 
 	if len(os.Args) < 2 {
-		fmt.Println("Please provide a URL (e.g.  https://www.buzzfeed.com/?country=us)")
+		fmt.Println("Please provide a URL (e.g.  https://www.fastly.com/)")
 		os.Exit(1)
 	}
 
