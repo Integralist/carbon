@@ -8,6 +8,7 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+	"time"
 )
 
 type header struct {
@@ -50,17 +51,21 @@ func main() {
 		os.Exit(1)
 	}
 
-	var url string
-	switch len(os.Args) {
-	case 5:
-		url = os.Args[4]
-	case 4:
-		url = os.Args[3]
-	default:
-		url = os.Args[1]
+	url := os.Args[len(os.Args)-1]
+
+	client := &http.Client{
+		Timeout: time.Second * 5,
 	}
 
-	response, err := http.Get(url)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(1)
+	}
+
+	req.Header.Set("Fastly-Debug", "true")
+
+	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
@@ -68,7 +73,7 @@ func main() {
 
 	hs := headers{}
 
-	for k, v := range response.Header {
+	for k, v := range resp.Header {
 		hs = append(hs, header{k, v})
 	}
 
@@ -90,5 +95,5 @@ func main() {
 		}
 	}
 
-	fmt.Printf("Status Code: %s\n\n", response.Status)
+	fmt.Printf("Status Code: %s\n\n", resp.Status)
 }
