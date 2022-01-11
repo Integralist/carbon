@@ -4,10 +4,12 @@ HTTP Response Header Sorting and Filtering
 
 > carbon filtering: method of filtering impurities
 
+![Example output of running the carbon executable](./carbon.png)
+
 ## Install
 
 ```bash
-go get -u github.com/integralist/carbon
+go install github.com/integralist/carbon@latest
 ```
 
 ## Build
@@ -17,8 +19,6 @@ To build and install the `carbon` executable locally, then run:
 ```bash
 make install
 ```
-
-> this will install to `/usr/local/bin` where as `go get` installs to the `~/go/bin`.
 
 ## Usage
 
@@ -31,6 +31,8 @@ Usage of carbon:
         e.g. cache,vary
   -help
         show available flags
+  -json
+        output is formatted into JSON for easy parsing
   -plain
     	output is formatted for easy piping
 ```
@@ -94,6 +96,14 @@ X-Cache:
   [HIT]
 
 Status Code: 200 OK
+```
+
+With filter AND json...
+
+```bash
+carbon -filter cache,vary --json https://www.fastly.com
+
+[{"Key":"Cache-Control","Val":["max-age=0, private, must-revalidate"]},{"Key":"Vary","Val":["Accept-Encoding"]},{"Key":"X-Cache","Val":["HIT"]},{"Key":"X-Cache-Hits","Val":["2"]}]
 ```
 
 Plain...

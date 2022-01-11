@@ -30,8 +30,7 @@ gobuild:
 	go build -o ./carbon
 
 install: gobuild
-	cp ./carbon  /usr/local/bin/carbon
-	rm ./carbon
+	go install
 
 compile:
 	@docker build -t go-compiler -f ./Dockerfile-compile .
