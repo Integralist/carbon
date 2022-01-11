@@ -9,7 +9,12 @@ import (
 	"sort"
 	"strings"
 	"time"
+
+	"github.com/fatih/color"
 )
+
+// Header determines the styles for response header keys.
+var Header = color.New(color.Bold, color.BgYellow, color.FgBlack).SprintFunc()
 
 type header struct {
 	Key string
@@ -27,9 +32,11 @@ func (v headers) Less(i, j int) bool {
 
 func print(key string, val []string, plain bool) {
 	if plain == true {
-		fmt.Printf("%s: %s\n", key, strings.Join(val, ", "))
+		s := fmt.Sprintf("%s: %s\n", Header(key), strings.Join(val, ", "))
+		fmt.Fprint(color.Output, s)
 	} else {
-		fmt.Printf("%s:\n  %s\n\n", key, val)
+		s := fmt.Sprintf("%s:\n  %s\n\n", Header(key), val)
+		fmt.Fprint(color.Output, s)
 	}
 }
 
