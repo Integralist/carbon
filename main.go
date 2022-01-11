@@ -1,8 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"regexp"
@@ -32,12 +34,20 @@ func (v headers) Less(i, j int) bool {
 
 func print(key string, val []string, plain bool) {
 	if plain == true {
-		s := fmt.Sprintf("%s: %s\n", Header(key), strings.Join(val, ", "))
-		fmt.Fprint(color.Output, s)
-	} else {
-		s := fmt.Sprintf("%s:\n  %s\n\n", Header(key), val)
-		fmt.Fprint(color.Output, s)
+		fmt.Printf("%s: %s\n", key, strings.Join(val, ", "))
+		return
 	}
+
+	s := fmt.Sprintf("%s:\n  %s\n\n", Header(key), val)
+	fmt.Fprint(color.Output, s)
+}
+
+func printJSON(hs headers) {
+	data, err := json.Marshal(hs)
+	if err != nil {
+		log.Fatalf("whoops, unable to convert data into JSON: %s\n", err)
+	}
+	fmt.Println(string(data))
 }
 
 func main() {
@@ -51,6 +61,7 @@ func main() {
 	help := flag.Bool("help", false, "show available flags")
 	filter := flag.String("filter", "", "comma-separated list of headers to be displayed\n\te.g. cache,vary")
 	plain := flag.Bool("plain", false, "output is formatted for easy piping")
+	jsonv := flag.Bool("json", false, "output is formatted into JSON for easy parsing")
 	flag.Parse()
 
 	if *help == true {
@@ -88,18 +99,36 @@ func main() {
 
 	if *filter != "" {
 		filters := strings.Split(*filter, ",")
-		for _, header := range hs {
+
+		jh := headers{}
+
+		for _, h := range hs {
 			for _, v := range filters {
-				matched, _ := regexp.MatchString("(?i)"+v, header.Key)
+				matched, _ := regexp.MatchString("(?i)"+v, h.Key)
 				if matched {
-					print(header.Key, header.Val, *plain)
+					if *jsonv {
+						jh = append(jh, h)
+					} else {
+						print(h.Key, h.Val, *plain)
+					}
 				}
 			}
 		}
-	} else {
-		for _, header := range hs {
-			print(header.Key, header.Val, *plain)
+
+		if *jsonv {
+			printJSON(jh)
+			return
 		}
+
+		return
+	}
+
+	if *jsonv {
+		printJSON(hs)
+		return
+	}
+	for _, header := range hs {
+		print(header.Key, header.Val, *plain)
 	}
 
 	fmt.Printf("Status Code: %s\n\n", resp.Status)
