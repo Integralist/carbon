@@ -60,7 +60,7 @@ func main() {
 
 	help := flag.Bool("help", false, "show available flags")
 	filter := flag.String("filter", "", "comma-separated list of headers to be displayed\n\te.g. cache,vary")
-	plain := flag.Bool("plain", false, "output is formatted for easy piping")
+	plain := flag.Bool("plain", false, "output is formatted without any extraneous spacing or ANSI colour codes")
 	jsonv := flag.Bool("json", false, "output is formatted into JSON for easy parsing")
 	flag.Parse()
 

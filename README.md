@@ -1,8 +1,10 @@
 # Carbon
 
-HTTP Response Header Sorting and Filtering
+Carbon is a tool that issues HTTP requests, then parses, sorts and displays relevant HTTP response headers. 
 
-> carbon filtering: method of filtering impurities
+> **NOTE**: The name 'carbon' comes from carbon filtering: method of filtering impurities.
+
+By default it will display all response headers with coloured keys, but headers can also be filtered, as well as parsed into JSON for easier piping/analysis...
 
 ![Example output of running the carbon executable](./carbon.png)
 
@@ -34,7 +36,7 @@ Usage of carbon:
   -json
         output is formatted into JSON for easy parsing
   -plain
-    	output is formatted for easy piping
+    	  output is formatted without any extraneous spacing or ANSI colour codes
 ```
 
 No filter...
