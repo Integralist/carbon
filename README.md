@@ -125,4 +125,4 @@ Nope. This was just a quick hack
 
 ## Bash Alternative?
 
-Here's an official repo for the Bash version](https://github.com/Integralist/Bash-Headers) (if you're interested).
+Here's an official repo for the [Bash version](https://github.com/Integralist/Bash-Headers) (if you're interested, although it's a lot more basic but was the starting point that motivated me to do this go version).
